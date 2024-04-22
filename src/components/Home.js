@@ -3,32 +3,43 @@ import axios from 'axios';
 
 function Home() {
   const [quotes, setQuotes] = useState([]);
+  const userId = localStorage.getItem('userId');
 
   useEffect(() => {
-      const fetchQuotes = async () => {
-          try {
-              const response = await axios.get('http://localhost:3001/api/quotes');
-              setQuotes(response.data);
-          } catch (error) {
-              console.error("Error fetching quotes", error);
-          }
-      };
-
+      async function fetchQuotes() {
+          const response = await axios.get('http://localhost:3001/api/quotes');
+          setQuotes(response.data);
+      }
       fetchQuotes();
   }, []);
 
-  const recentQuotes = quotes.slice(0, 1); // Get the first 10 quotes
+  const handleLike = async (quoteId) => {
+      await axios.put(`http://localhost:3001/api/quotes/${quoteId}/like`, { userId });
+      setQuotes(quotes.map(quote => quote._id === quoteId ? {...quote, likes: [...quote.likes, userId]} : quote));
+  };
+
+  const handleUnlike = async (quoteId) => {
+      await axios.put(`http://localhost:3001/api/quotes/${quoteId}/unlike`, { userId });
+      setQuotes(quotes.map(quote => quote._id === quoteId ? {...quote, likes: quote.likes.filter(id => id !== userId)} : quote));
+  };
 
   return (
-      <div className="container">
-        {recentQuotes.map((quote, index) => (
-          <div key={index} className="post">
-            <h3>{quote.quoteText}</h3>
-            <small>Posted by: {quote.userId?.username} on {new Date(quote.created).toLocaleString()}</small>
-          </div>
-        ))}
+      <div>
+          {quotes.map((quote, index) => (
+              <div key={index} className="quote-item">
+                  <h3>{quote.text}</h3>
+                  <p>{quote.author}</p>
+                  <small>{quote.date}</small>
+                  {quote.likes.includes(userId) ? (
+                      <button className="unlike-button" onClick={() => handleUnlike(quote._id)}>Unlike</button>
+                  ) : (
+                      <button className="like-button" onClick={() => handleLike(quote._id)}>Like</button>
+                  )}
+                  <span>Likes: {quote.likes.length}</span>
+              </div>
+          ))}
       </div>
-    );      
+  );
 }
 
 export default Home;

@@ -38,3 +38,45 @@ exports.deleteQuote = async (req, res) => {
     res.status(500).send({ message: 'Error deleting quote' });
   }
 };
+
+
+exports.likeQuote = async (req, res) => {
+  const { id } = req.params;
+  const userId = req.body.userId; // Assuming userId is validated to exist
+
+  try {
+      const quote = await Quote.findById(id);
+      if (quote.likes.includes(userId)) {
+          return res.status(400).send({ message: 'You have already liked this quote' });
+      }
+      quote.likes.push(userId);
+      await quote.save();
+      res.status(200).send({ message: 'Quote liked' });
+  } catch (error) {
+      res.status(500).send({ message: 'Error liking quote', error });
+  }
+};
+
+exports.unlikeQuote = async (req, res) => {
+  const { id } = req.params;
+  const userId = req.body.userId;  // This should be a validated userId from the client or session
+
+  try {
+      const quote = await Quote.findById(id);
+      if (!quote) {
+          return res.status(404).send({ message: 'Quote not found' });
+      }
+
+      const index = quote.likes.indexOf(userId);
+      if (index === -1) {
+          return res.status(400).send({ message: 'You have not liked this quote' });
+      }
+
+      // Remove the user from the likes array
+      quote.likes.splice(index, 1);
+      await quote.save();
+      res.status(200).send({ message: 'Like removed' });
+  } catch (error) {
+      res.status(500).send({ message: 'Error unliking the quote', error });
+  }
+};
