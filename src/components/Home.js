@@ -2,42 +2,56 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 function Home() {
-  const [quotes, setQuotes] = useState([]);
-  const userId = localStorage.getItem('userId');
+    const [quotes, setQuotes] = useState([]);
+    const userId = localStorage.getItem('userId'); // Define userId here
 
-  useEffect(() => {
-      async function fetchQuotes() {
-          const response = await axios.get('http://localhost:3001/api/quotes');
-          setQuotes(response.data);
+    useEffect(() => {
+        const fetchQuotes = async () => {
+            try {
+                const response = await axios.get('http://localhost:3001/api/quotes');
+                setQuotes(response.data);
+            } catch (error) {
+                console.error("Error fetching quotes", error);
+            }
+        };
+
+        fetchQuotes();
+    }, []);
+
+    const handleToggleLike = async (quoteId, isLiked) => {
+      // The userId is now available here because it's defined outside this function
+      const endpoint = isLiked ? `/api/quotes/${quoteId}/unlike` : `/api/quotes/${quoteId}/like`;
+  
+      try {
+          await axios.put(`http://localhost:3001${endpoint}`, { userId });
+          setQuotes(quotes.map(quote => {
+              if (quote._id === quoteId) {
+                  const updatedLikes = isLiked
+                      ? quote.likes.filter(id => id !== userId)
+                      : [...quote.likes, userId];
+                  return { ...quote, likes: updatedLikes };
+              }
+              return quote;
+          }));
+      } catch (error) {
+          console.error(`Error ${isLiked ? 'unliking' : 'liking'} the quote`, error);
       }
-      fetchQuotes();
-  }, []);
+    };
 
-  const handleLike = async (quoteId) => {
-      await axios.put(`http://localhost:3001/api/quotes/${quoteId}/like`, { userId });
-      setQuotes(quotes.map(quote => quote._id === quoteId ? {...quote, likes: [...quote.likes, userId]} : quote));
-  };
-
-  const handleUnlike = async (quoteId) => {
-      await axios.put(`http://localhost:3001/api/quotes/${quoteId}/unlike`, { userId });
-      setQuotes(quotes.map(quote => quote._id === quoteId ? {...quote, likes: quote.likes.filter(id => id !== userId)} : quote));
-  };
-
-  return (
-      <div>
-          {quotes.map((quote, index) => (
-              <div key={index} className="quote-item">
-                  <h3>{quote.text}</h3>
-                  <p>{quote.author}</p>
-                  <small>{quote.date}</small>
-                  {quote.likes.includes(userId) ? (
-                      <button className="unlike-button" onClick={() => handleUnlike(quote._id)}>Unlike</button>
-                  ) : (
-                      <button className="like-button" onClick={() => handleLike(quote._id)}>Like</button>
-                  )}
-                  <span>Likes: {quote.likes.length}</span>
-              </div>
-          ))}
+    return (
+      <div className="container">
+          {quotes.slice(0, 15).map((quote, index) => {
+              const isLiked = quote.likes.includes(userId); // The userId is used here
+              return (
+                  <div key={index} className="quote-item">
+                      <h3>{quote.quoteText}</h3>
+                      <small>Posted by: {quote.userId?.username} on {new Date(quote.created).toLocaleString()}</small>
+                      <button onClick={() => handleToggleLike(quote._id, isLiked)} className={isLiked ? "unlike-button" : "like-button"}>
+                          {isLiked ? 'Unlike' : 'Like'} ({quote.likes.length})
+                      </button>
+                  </div>
+              );
+          })}
       </div>
   );
 }
