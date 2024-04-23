@@ -102,3 +102,22 @@ exports.getQuotesByUsername = async (req, res) => {
     res.status(500).send({ message: 'Error fetching quotes', error });
   }
 };
+
+
+exports.getRandomQuote = async (req, res) => {
+  try {
+    const count = await Quote.countDocuments();
+    if (count === 0) {
+      return res.status(404).send({ message: 'No quotes available' });
+    }
+    const random = Math.floor(Math.random() * count);
+    const randomQuote = await Quote.findOne().skip(random).populate('userId').exec();  // Corrected population field
+    if (!randomQuote) {
+      return res.status(404).send({ message: 'Failed to fetch random quote' });
+    }
+    res.status(200).send(randomQuote);
+  } catch (error) {
+    console.error('Error fetching random quote', error);
+    res.status(500).send({ message: 'Error fetching random quote', error });
+  }
+};
