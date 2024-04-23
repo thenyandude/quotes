@@ -10,6 +10,7 @@ function UserHome() {
     const [quotes, setQuotes] = useState([]);
     const [charCount, setCharCount] = useState(0);
     const [origin, setOrigin] = useState('');
+    const [error, setError] = useState('');
 
     const userId = localStorage.getItem('userId');
 
@@ -40,14 +41,17 @@ function UserHome() {
     // Function to handle the creation of a new quote
     const handleCreateQuote = async (event) => {
         event.preventDefault();
+        if (!quoteText.trim() || !origin.trim()) {
+            setError("Please fill out all fields.");
+            console.error("Both fields are required.");
+            return;  // Stop the form submission
+        }
         try {
-            // Make sure to send the correct payload to your backend
             const response = await axios.post('http://localhost:3001/api/quotes', {
                 userId,
                 quoteText,
                 origin
             });
-            // After a successful response, you can clear the form and refresh quotes
             setQuoteText('');
             setOrigin('');
             fetchQuotes();
@@ -55,6 +59,8 @@ function UserHome() {
             console.error("Error creating quote", error);
         }
     };
+    
+    
       
     // Function to delete a quote
     const deleteQuote = async (quoteId) => {
@@ -80,15 +86,17 @@ function UserHome() {
                 <form onSubmit={handleCreateQuote}>
                     <div className="form-group">
                         <textarea 
+                            className={`form-control ${error && !quoteText.trim() ? 'input-error' : ''}`}
                             placeholder="Share a quote"
-                            value={quoteText} 
-                            onChange={handleQuoteTextChange} 
+                            value={quoteText}
+                            onChange={handleQuoteTextChange}
                             maxLength="100"
-                        ></textarea>
+                        />
                         <div className="character-counter">
                             {charCount}/100 characters
                         </div>
-                        <div className="form-group">
+                    </div>
+                    <div className="form-group">
                         <input
                             type="text"
                             placeholder="Origin"
@@ -96,7 +104,7 @@ function UserHome() {
                             onChange={(e) => setOrigin(e.target.value)}
                         />
                     </div>
-                    </div>
+                    <div className={`error-message ${error ? 'show' : 'hide'}`}>{error}</div>
                     <button type="submit">Publish Quote</button>
                 </form>
             </div>
@@ -111,7 +119,7 @@ function UserHome() {
                 ))}
             </div>
         </div>
-    );
+    );    
 }
 
 export default UserHome;

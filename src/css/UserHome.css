@@ -132,3 +132,22 @@
 .delete-quote-button:hover {
   background: #c9302c;
 }
+
+.error-message {
+  color: red;
+  margin: 10px 0;
+  display: none; 
+}
+
+.error-message.show {
+  display: block; 
+}
+
+.error-message.hide {
+  display: none; 
+}
+
+
+.input-error {
+  border: 1px solid red;
+}

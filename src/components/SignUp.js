@@ -30,7 +30,7 @@ function SignUp() {
 
   return (
     <div className="auth-container">
-      <h2>Make an account</h2>
+      <h2>Become a pretentious quoter</h2>
       <form onSubmit={handleSignUp} className="auth-form">
         <label>
           Username:
@@ -44,7 +44,7 @@ function SignUp() {
           Confirm Password:
           <input type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
         </label>
-        <button type="submit">Register</button>
+        <button type="submit">Sign up</button>
         {errorMessage && <div className="feedback-message">{errorMessage}</div>}
       </form>
     </div>
