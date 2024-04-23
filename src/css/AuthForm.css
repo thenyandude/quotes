@@ -1,0 +1,56 @@
+/* Auth Container Styles - Shared between SignUp and Login */
+.auth-container {
+    max-width: 400px;
+    margin: 50px auto;
+    padding: 20px;
+    background: #fff;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    border-radius: 4px;
+}
+
+.auth-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.auth-form label {
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.auth-form input[type="text"],
+.auth-form input[type="password"] {
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 90%;
+}
+
+.auth-form button {
+    padding: 10px;
+    background-color: #5cb85c;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.auth-form button:hover {
+    background-color: #4cae4c;
+}
+
+.error-message, .feedback-message {
+    color: #d9534f;
+    background-color: #f2dede;
+    padding: 10px;
+    margin-top: 20px;
+    border: 1px solid #ebccd1;
+    border-radius: 4px;
+    text-align: center;
+}
+
+h2 {
+    text-align: center;
+    color: #333;
+}
