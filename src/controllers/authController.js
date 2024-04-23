@@ -7,7 +7,7 @@ exports.register = async (req, res) => {
   try {
     const existingUser = await User.findOne({ username });
     if (existingUser) {
-      return res.status(400).send('Username is already in use');
+      return res.status(409).send('Username is already in use');
     }
     const hashedPassword = await bcrypt.hash(password, 10);
     const user = new User({ username, password: hashedPassword });
@@ -17,6 +17,7 @@ exports.register = async (req, res) => {
     res.status(500).send('Server error during user creation');
   }
 };
+
 
 exports.login = async (req, res) => {
   const { username, password } = req.body;

@@ -21,16 +21,24 @@ function SignUp() {
     try {
       const response = await axios.post('http://localhost:3001/api/signup', { username, password });
       if (response.status === 201) {
-        navigate('/login'); // Redirect to login on successful signup
+        navigate('/login');
       }
     } catch (error) {
-      if (error.response && error.response.status === 409) {
-        setErrorMessage("Username already exists. Please choose a different one.");
+      if (error.response) {
+        switch (error.response.status) {
+          case 409:
+            setErrorMessage("Username already exists. Please choose a different one.");
+            break;
+          default:
+            setErrorMessage("Error during registration. Please try again later.");
+            break;
+        }
       } else {
-        setErrorMessage("Error during registration.");
+        // Handle network error or no response from server
+        setErrorMessage("Unable to connect to the server. Please try again later.");
       }
     }
-  };
+  }
 
   return (
     <div className="auth-container">
