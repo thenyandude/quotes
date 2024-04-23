@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
-import '../css/Home.css'; // Ensures styling is consistent
+import '../css/Home.css';
 
 function FindQuotes() {
   const [quotes, setQuotes] = useState([]);
@@ -11,7 +11,6 @@ function FindQuotes() {
   useEffect(() => {
     const fetchQuotes = async () => {
       try {
-        // Adjust the endpoint as necessary to filter quotes by username
         const response = await axios.get(`http://localhost:3001/api/quotes/byUser/${username}`);
         setQuotes(response.data);
       } catch (error) {
@@ -22,6 +21,11 @@ function FindQuotes() {
   }, [username]);
 
   const handleToggleLike = async (quoteId, isLiked) => {
+    if (!userId) {
+      alert("You need to create an account to like quotes.");
+      return;
+    }
+
     const endpoint = isLiked ? `/api/quotes/${quoteId}/unlike` : `/api/quotes/${quoteId}/like`;
     try {
       await axios.put(`http://localhost:3001${endpoint}`, { userId });

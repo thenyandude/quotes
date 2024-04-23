@@ -14,7 +14,7 @@ function SignUp() {
     e.preventDefault();
 
     if (password !== confirmPassword) {
-      setErrorMessage("Passordene matcher ikke.");
+      setErrorMessage("Passwords do not match.");
       return;
     }
 
@@ -24,7 +24,11 @@ function SignUp() {
         navigate('/login'); // Redirect to login on successful signup
       }
     } catch (error) {
-      setErrorMessage(error.response ? error.response.data.message : 'Eroor during registering');
+      if (error.response && error.response.status === 409) {
+        setErrorMessage("Username already exists. Please choose a different one.");
+      } else {
+        setErrorMessage("Error during registration.");
+      }
     }
   };
 

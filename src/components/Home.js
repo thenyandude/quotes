@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import '../css/Home.css'
+import { Link } from 'react-router-dom';
+import '../css/Home.css';
 
 function Home() {
     const [quote, setQuote] = useState(null);
@@ -20,6 +21,11 @@ function Home() {
     }, []);
 
     const handleToggleLike = async (quoteId, isLiked) => {
+      if (!userId) {
+        alert("You need to create an account to like quotes.");
+        return;
+      }
+
       const endpoint = isLiked ? `/api/quotes/${quoteId}/unlike` : `/api/quotes/${quoteId}/like`;
   
       try {
