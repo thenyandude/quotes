@@ -40,21 +40,20 @@ function Home() {
     };
 
     return (
-      <div className="container">
-          {quotes.slice(0, 1).map((quote, index) => {
-              const isLiked = quote.likes.includes(userId); // The userId is used here
-              return (
-                  <div key={index} className="home-quote-item">
-                      <h3>"{quote.quoteText}"</h3>
-                      <small>-{quote.origin}</small>
-                      <button onClick={() => handleToggleLike(quote._id, isLiked)} className={isLiked ? "unlike-button" : "like-button"}>
-                          {isLiked ? 'Unlike' : 'Like'} ({quote.likes.length})
-                      </button>
-                  </div>
-              );
-          })}
-      </div>
-  );
+        <div className="container home-page">
+            {quotes.slice(0, 1).map((quote, index) => (
+                <div key={index} className="home-quote-item quote-item-centered">
+                    <h3>"{quote.quoteText}"</h3>
+                    <small>-{quote.origin}</small>
+                    <button onClick={() => handleToggleLike(quote._id, quote.likes.includes(userId))}
+                            className={quote.likes.includes(userId) ? "unlike-button" : "like-button"}>
+                        {quote.likes.includes(userId) ? 'Unlike' : 'Like'} ({quote.likes.length})
+                    </button>
+                </div>
+            ))}
+        </div>
+    );
+    
 }
 
 export default Home;

@@ -12,9 +12,11 @@
   }
   
   .home-quote-item small {
+    position: relative;
     display: block;
-    margin-top: 10px;
+    margin-top: 40px;
     color: #484848;
+    left: 80px;
     
   }
   
@@ -61,3 +63,29 @@
     box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.4), 0 0 0 4px rgba(220, 53, 69, 0.5);
   }
   
+
+
+  /* Specific styles for the Home page container */
+.home-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Make the container fill the viewport height */
+}
+
+/* Styles to make the quote item on the Home page larger and more centered */
+.quote-item-centered {
+  text-align: center;
+  font-size: 1.2em; /* Larger font size for better visibility */
+  max-width: 800px; /* Slightly wider than other quote items */
+  padding: 20px; /* More padding for a bigger look */
+  margin: auto; /* Ensure it's centered horizontally */
+}
+
+.quote-item-centered h3 {
+  font-size: 2em; /* Larger text for the quote */
+}
+
+.quote-item-centered small {
+  font-size: 1.1em; /* Slightly larger text for the origin */
+}
