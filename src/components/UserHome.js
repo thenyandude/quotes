@@ -3,10 +3,14 @@ import axios from 'axios';
 import '../css/UserHome.css';
 import '../css/App.css';
 
+
+
 function UserHome() {
     const [quoteText, setQuoteText] = useState('');
     const [quotes, setQuotes] = useState([]);
     const [charCount, setCharCount] = useState(0);
+    const [origin, setOrigin] = useState('');
+
     const userId = localStorage.getItem('userId');
 
     // Function to handle changes in the quote input field
@@ -34,18 +38,24 @@ function UserHome() {
     }, [userId, fetchQuotes]); // Effect dependencies
 
     // Function to handle the creation of a new quote
-    const handleCreateQuote = async (e) => {
-        e.preventDefault();
+    const handleCreateQuote = async (event) => {
+        event.preventDefault();
         try {
-            const response = await axios.post('http://localhost:3001/api/quotes', { userId, quoteText });
-            setQuotes([response.data, ...quotes]); // Add new quote to the start of the list
-            setQuoteText(''); // Clear the input field
-            fetchQuotes(); // Re-fetch quotes to ensure the list is updated
+            // Make sure to send the correct payload to your backend
+            const response = await axios.post('http://localhost:3001/api/quotes', {
+                userId,
+                quoteText,
+                origin
+            });
+            // After a successful response, you can clear the form and refresh quotes
+            setQuoteText('');
+            setOrigin('');
+            fetchQuotes();
         } catch (error) {
             console.error("Error creating quote", error);
         }
     };
-
+      
     // Function to delete a quote
     const deleteQuote = async (quoteId) => {
         try {
@@ -78,6 +88,14 @@ function UserHome() {
                         <div className="character-counter">
                             {charCount}/100 characters
                         </div>
+                        <div className="form-group">
+                        <input
+                            type="text"
+                            placeholder="Origin"
+                            value={origin}
+                            onChange={(e) => setOrigin(e.target.value)}
+                        />
+                    </div>
                     </div>
                     <button type="submit">Publish Quote</button>
                 </form>
@@ -87,6 +105,7 @@ function UserHome() {
                 {quotes.map((quote, index) => (
                     <div key={index} className="quote-item">
                         <p>{quote.quoteText}</p>
+                        <p>{quote.origin}</p>
                         <button className="delete-quote-button" onClick={() => deleteQuote(quote._id)}>Delete</button>
                     </div>
                 ))}

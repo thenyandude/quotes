@@ -4,27 +4,35 @@ const User = require('../models/User');
 
 exports.createQuote = async (req, res) => {
   try {
-    const { userId, quoteText } = req.body;
+    const { userId, quoteText, origin } = req.body; // Destructure origin from req.body
     const user = await User.findById(userId);
     if (!user) {
       return res.status(404).send({ message: 'User not found' });
     }
-    const newQuote = new Quote({ userId, quoteText });
+    const newQuote = new Quote({
+      userId,
+      quoteText,
+      origin // Include origin when creating a new quote
+    });
     await newQuote.save();
-    res.status(201).send({ message: 'Quote created', quoteId: newQuote._id });
+    res.status(201).send({ message: 'Quote created', quote: newQuote }); // Send the new quote back
   } catch (error) {
-    res.status(500).send({ message: 'Error creating quote' });
+    res.status(500).send({ message: 'Error creating quote', error });
   }
 };
 
 exports.getQuotes = async (req, res) => {
   try {
-    const quotes = await Quote.find().populate('userId', 'username').sort({ created: -1 });
+    const userId = req.query.userId; // Get the userId from query parameters
+    // Filter quotes by userId if it's provided
+    const query = userId ? { userId: userId } : {};
+    const quotes = await Quote.find(query).populate('userId', 'username').sort({ created: -1 });
     res.status(200).send(quotes);
   } catch (error) {
-    res.status(500).send({ message: 'Error fetching quotes' });
+    res.status(500).send({ message: 'Error fetching quotes', error });
   }
 };
+
 
 exports.deleteQuote = async (req, res) => {
   try {
@@ -78,5 +86,19 @@ exports.unlikeQuote = async (req, res) => {
       res.status(200).send({ message: 'Like removed' });
   } catch (error) {
       res.status(500).send({ message: 'Error unliking the quote', error });
+  }
+};
+
+exports.getQuotesByUsername = async (req, res) => {
+  try {
+    const { username } = req.params;
+    const user = await User.findOne({ username: username }); // Assuming usernames are unique
+    if (!user) {
+      return res.status(404).send({ message: 'User not found' });
+    }
+    const quotes = await Quote.find({ userId: user._id }).sort({ created: -1 });
+    res.status(200).send(quotes);
+  } catch (error) {
+    res.status(500).send({ message: 'Error fetching quotes', error });
   }
 };

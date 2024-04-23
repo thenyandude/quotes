@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import '../css/Home.css'
 
 function Home() {
     const [quotes, setQuotes] = useState([]);
@@ -40,12 +41,12 @@ function Home() {
 
     return (
       <div className="container">
-          {quotes.slice(0, 15).map((quote, index) => {
+          {quotes.slice(0, 1).map((quote, index) => {
               const isLiked = quote.likes.includes(userId); // The userId is used here
               return (
-                  <div key={index} className="quote-item">
-                      <h3>{quote.quoteText}</h3>
-                      <small>Posted by: {quote.userId?.username} on {new Date(quote.created).toLocaleString()}</small>
+                  <div key={index} className="home-quote-item">
+                      <h3>"{quote.quoteText}"</h3>
+                      <small>-{quote.origin}</small>
                       <button onClick={() => handleToggleLike(quote._id, isLiked)} className={isLiked ? "unlike-button" : "like-button"}>
                           {isLiked ? 'Unlike' : 'Like'} ({quote.likes.length})
                       </button>

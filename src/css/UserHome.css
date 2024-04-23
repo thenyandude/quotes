@@ -77,12 +77,11 @@
 
 /* Styles for each individual quote item */
 .quote-item {
-  background: #f9f9f9;
   padding: 15px;
   margin-bottom: 20px;
   border-radius: 4px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
   position: relative; /* Needed for absolute positioning of delete button */
+  text-align: center;
 }
 
 .quote-item h4 {
@@ -106,7 +105,7 @@
   position: relative; /* Position button inside the quote item */
   text-align: center;
 
-  left: 500px; /* Distance from right */
+  left: 40%; /* Distance from right */
   top: -35px; /* Distance from top */
   font-size: 0.8rem;
 }

@@ -8,5 +8,7 @@ router.get('/quotes', quoteController.getQuotes);
 router.delete('/quotes/:quoteId', quoteController.deleteQuote);
 router.put('/quotes/:id/like', quoteController.likeQuote);
 router.put('/quotes/:id/unlike', quoteController.unlikeQuote); 
+router.get('/quotes/byUser/:username', quoteController.getQuotesByUsername);
+
 
 module.exports = router;
