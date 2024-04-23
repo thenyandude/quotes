@@ -121,3 +121,12 @@ exports.getRandomQuote = async (req, res) => {
     res.status(500).send({ message: 'Error fetching random quote', error });
   }
 };
+
+exports.getTopQuotes = async (req, res) => {
+  try {
+    const quotes = await Quote.find().sort({ 'likes.length': -1 }); // Sort quotes by the number of likes
+    res.status(200).send(quotes);
+  } catch (error) {
+    res.status(500).send({ message: 'Error fetching top quotes', error });
+  }
+};

@@ -10,6 +10,7 @@ router.delete('/quotes/:quoteId', quoteController.deleteQuote);
 router.put('/quotes/:id/like', quoteController.likeQuote);
 router.put('/quotes/:id/unlike', quoteController.unlikeQuote); 
 router.get('/quotes/byUser/:username', quoteController.getQuotesByUsername);
+router.get('/top-quotes', quoteController.getTopQuotes);
 
 
 module.exports = router;

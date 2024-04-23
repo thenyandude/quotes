@@ -8,6 +8,8 @@ import UserHome from './components/UserHome';
 import Home from './components/Home';
 import FindQuotes from './components/FindQuotes';
 import Guide from './components/Guide';
+import TopQuotes from './components/TopQuotes';
+
 import { AuthProvider } from './context/AuthContext';
 
 function RedirectToGuide() {
@@ -44,6 +46,7 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/home" element={<UserHome userId={localStorage.getItem('userId')} />} />
             <Route path="/guide" element={<Guide />} />
+            <Route path='/top' element = {<TopQuotes/>} />
             <Route path="/:username" element={<FindQuotes/>} />
           </Routes>
         </Router>
