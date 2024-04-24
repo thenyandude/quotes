@@ -1,14 +1,13 @@
-.container {
+.top-container {
     display: flex;
     flex-direction: column;
     align-items: center;
     max-width: 600px; /* or any suitable width */
     margin: auto; /* Centering the container */
     padding: 20px;
-    margin-top: 170px; /* Adjust margin-top to push the quotes below the header */
 }
 
-.home-quote-item {
+.top-quote-item {
     width: 100%; /* Ensure quotes take up full width */
     margin-bottom: 20px; /* Add some spacing between quotes */
     padding: 10px;

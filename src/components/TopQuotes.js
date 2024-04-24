@@ -50,7 +50,7 @@ function TopQuotes() {
     };
 
     return (
-        <div className="container home-page">
+        <div className="top-container">
             <h1>Top Quotes</h1>
             {isLoading ? (
                 <p>Loading...</p>
@@ -58,7 +58,7 @@ function TopQuotes() {
                 <p className="error">{error}</p>
             ) : (
                 quotes.map((quote, index) => (
-                    <div key={index} className="home-quote-item">
+                    <div key={index} className="top-quote-item">
                         <blockquote>
                             "{quote.quoteText}"
                             <footer>— {quote.origin}</footer>
