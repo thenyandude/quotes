@@ -1,79 +1,78 @@
 /* UserHome Page Styles */
 
 .user-home-container {
-    width: 80%;
-    max-width: 600px;
-    margin: 0 auto;
-  }
-  
-  .create-quote-form {
-    background: #fff;
-    padding: 20px;
-    margin-bottom: 30px;
-    margin-top: 40px;
-    border-radius: 4px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  }
-  
-  .create-quote-form h2,
-  .quotes-list h3 {
-    text-align: center;
-    color: #333;
-  }
-  
-  .create-quote-form .form-group input[type="text"],
-  .create-quote-form .form-group textarea {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box; /* Make sure padding does not affect width */
-  }
-  
-  .create-quote-form .form-group label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
-    color: #333;
-  }
-  
-  .create-quote-form .form-group {
-    margin-bottom: 20px;
-  }
-  
-  .create-quote-form .form-group textarea {
-    width: calc(100% - 20px); /* Adjust width to account for padding */
-    padding: 10px;
-    margin-bottom: 0; /* Remove margin-bottom if you want the counter closer */
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
-    height: 100px; /* Set the height you want for your textarea */
-    resize: vertical; /* Allows vertical resizing, remove if not desired */
-  }
-  
-  .character-counter {
-    font-size: 0.8rem;
-    color: #666;
-    text-align: right;
-    margin-top: 5px; /* Adjust spacing between counter and textarea */
-  }
-  
-  .create-quote-form button {
-    width: 100%;
-    padding: 10px;
-    background: #5cb85c;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    margin-top: 10px;
-  }
-  
-  .create-quote-form button:hover {
-    background: #4cae4c;
-  }
-  
+  width: 80%;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.create-quote-form {
+  background: #fff;
+  padding: 20px;
+  margin-bottom: 30px;
+  margin-top: 40px;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.create-quote-form h2,
+.quotes-list h3 {
+  text-align: center;
+  color: #333;
+}
+
+.create-quote-form .form-group input[type="text"],
+.create-quote-form .form-group textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box; /* Make sure padding does not affect width */
+}
+
+.create-quote-form .form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #333;
+}
+
+.create-quote-form .form-group {
+  margin-bottom: 20px;
+}
+
+.create-quote-form .form-group textarea {
+  width: calc(100% - 20px); /* Adjust width to account for padding */
+  padding: 10px;
+  margin-bottom: 0; /* Remove margin-bottom if you want the counter closer */
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  height: 100px; /* Set the height you want for your textarea */
+  resize: vertical; /* Allows vertical resizing, remove if not desired */
+}
+
+.character-counter {
+  font-size: 0.8rem;
+  color: #666;
+  text-align: right;
+  margin-top: 5px; /* Adjust spacing between counter and textarea */
+}
+
+.create-quote-form button {
+  width: 100%;
+  padding: 10px;
+  background: #5cb85c;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.create-quote-form button:hover {
+  background: #4cae4c;
+}
 
 /* Styles for each individual quote item */
 .quote-item {
@@ -84,69 +83,54 @@
   text-align: center;
 }
 
-.quote-item h4 {
-  color: #333;
-  margin: 0 0 10px 0; /* Space between the title and content */
-}
-
 .quote-item p {
   color: #666;
   font-size: 0.9rem; /* Smaller font size for the quote text */
 }
 
-.quote-item button {
-  width: auto; /* Auto width based on text size */
-  padding: 10px 12px; /* Smaller padding */
-  background: #d9534f;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  position: relative; /* Position button inside the quote item */
-  text-align: center;
-
-  left: 40%; /* Distance from right */
-  top: -35px; /* Distance from top */
-  font-size: 0.8rem;
-}
-
-.quote-item button:hover {
-  background: #c9302c; /* Darker red on hover */
-}
-
-/* Revised Delete Button Styles */
-.delete-quote-button {
+/* Revised Button Styles */
+.edit-button, .delete-quote-button {
   padding: 6px 15px; /* Adjust size as needed */
-  background: #d9534f;
   color: white;
   border: none;
   border-radius: 4px;
   cursor: pointer;
+  font-size: 0.8rem;
+  margin-right: 5px; /* Space between buttons */
+}
+
+.edit-button {
+  background-color: #007bff; /* Bootstrap primary blue */
+  position: absolute; /* Position inside post item */
+  right: 100px; /* Distance from right */
+  bottom: 15px; /* Distance from bottom */
+}
+
+.edit-button:hover {
+  background-color: #0056b3; /* Darker blue on hover */
+  
+}
+
+.delete-quote-button {
+  background: #d9534f;
   position: absolute; /* Position inside post item */
   right: 15px; /* Distance from right */
   bottom: 15px; /* Distance from bottom */
-  font-size: 16px;
-  margin-bottom: 49px;
 }
 
 .delete-quote-button:hover {
-  background: #c9302c;
+  background: #c9302c; /* Darker red on hover */
 }
 
 .error-message {
   color: red;
   margin: 10px 0;
-  display: none; 
+  display: none;
 }
 
 .error-message.show {
-  display: block; 
+  display: block;
 }
-
-.error-message.hide {
-  display: none; 
-}
-
 
 .input-error {
   border: 1px solid red;

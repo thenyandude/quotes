@@ -11,6 +11,6 @@ router.put('/quotes/:id/like', quoteController.likeQuote);
 router.put('/quotes/:id/unlike', quoteController.unlikeQuote); 
 router.get('/quotes/byUser/:username', quoteController.getQuotesByUsername);
 router.get('/top-quotes', quoteController.getTopQuotes);
-
+router.put('/quotes/:quoteId', quoteController.updateQuote);
 
 module.exports = router;

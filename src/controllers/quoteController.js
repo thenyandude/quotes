@@ -130,3 +130,19 @@ exports.getTopQuotes = async (req, res) => {
     res.status(500).send({ message: 'Error fetching top quotes', error });
   }
 };
+
+
+exports.updateQuote = async (req, res) => {
+  const { quoteId } = req.params;
+  const { quoteText, origin } = req.body; // data to update
+
+  try {
+      const updatedQuote = await Quote.findByIdAndUpdate(quoteId, { quoteText, origin }, { new: true });
+      if (!updatedQuote) {
+          return res.status(404).send({ message: 'Quote not found' });
+      }
+      res.status(200).send({ message: 'Quote updated', quote: updatedQuote });
+  } catch (error) {
+      res.status(500).send({ message: 'Error updating quote', error });
+  }
+};
