@@ -5,11 +5,12 @@ import '../css/Header.css';
 
 function Header() {
     const { isLoggedIn, username, logout } = useAuth();
+
     return (
         <header>
             <div className="header-logo">
                 <Link to="/" style={{ textDecoration: 'none' }}>
-                    <img src="cat-test.png" alt="Logo" style={{ height: '50px' }} /> {/* Adjust path and styling as needed */}
+                    <img src="cat-test.png" alt="Logo" style={{ height: '50px' }} />
                 </Link>
             </div>  
             <div className="header-title">
@@ -23,9 +24,15 @@ function Header() {
             </div>
             <div className="header-auth">
                 {isLoggedIn ? (
-                    <button onClick={logout} className="auth-link">Log Out</button>
+                    <>
+                        <Link to="/top" className="auth-link">Top Quotes</Link>
+                        <button onClick={logout} className="auth-link">Log Out</button>
+                    </>
                 ) : (
-                    <Link to="/login" className="auth-link">Log In</Link>
+                    <>
+                        <Link to="/signup" className="auth-link">Sign Up</Link>
+                        <Link to="/login" className="auth-link">Log In</Link>
+                    </>
                 )}
             </div>
         </header>
