@@ -18,7 +18,7 @@ function UserHome() {
 
     const fetchQuotes = useCallback(async () => {
         try {
-            const response = await axios.get(`http://localhost:3001/api/quotes?userId=${userId}`);
+            const response = await axios.get(`http://10.12.99.20/api/quotes?userId=${userId}`);
             setQuotes(response.data.slice(0, 5));
         } catch (error) {
             console.error("Error fetching quotes", error);
@@ -46,7 +46,7 @@ function UserHome() {
         };
         const endpoint = editingQuoteId ? `/api/quotes/${editingQuoteId}` : '/api/quotes';
         try {
-            const response = await axios[editingQuoteId ? 'put' : 'post'](`http://localhost:3001${endpoint}`, quoteData);
+            const response = await axios[editingQuoteId ? 'put' : 'post'](`http://10.12.99.20${endpoint}`, quoteData);
             if (response.data) {
                 fetchQuotes();
                 setQuoteText('');
@@ -62,7 +62,7 @@ function UserHome() {
 
     const deleteQuote = async (quoteId) => {
         try {
-            const response = await axios.delete(`http://localhost:3001/api/quotes/${quoteId}`);
+            const response = await axios.delete(`http://10.12.99.20/api/quotes/${quoteId}`);
             if (response.status === 200) {
                 setQuotes(quotes.filter(quote => quote._id !== quoteId));
             }

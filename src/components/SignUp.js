@@ -19,7 +19,7 @@ function SignUp() {
     }
 
     try {
-      const response = await axios.post('http://localhost:3001/api/signup', { username, password });
+      const response = await axios.post('http://10.12.99.20/api/signup', { username, password });
       if (response.status === 201) {
         navigate('/login');
       }

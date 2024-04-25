@@ -33,7 +33,7 @@ function TopQuotes() {
       const endpoint = isLiked ? `/api/quotes/${quoteId}/unlike` : `/api/quotes/${quoteId}/like`;
 
       try {
-          await axios.put(`http://localhost:3001${endpoint}`, { userId });
+          await axios.put(`http://10.12.99.20${endpoint}`, { userId });
           const updatedQuotes = quotes.map(quote => {
               if (quote._id === quoteId) {
                   return {
