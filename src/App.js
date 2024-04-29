@@ -54,5 +54,5 @@ function App() {
     </AuthProvider>
   );
 }
-
+{/*LES OPP PÅ PM2 og ENV, og forbedre utrulling*/ }
 export default App;
