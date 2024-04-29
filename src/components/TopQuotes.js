@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import '../css/TopQuotes.css'; // Import TopQuotes.css
+import config from '../config'; 
+
 function TopQuotes() {
     const [quotes, setQuotes] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
@@ -14,7 +16,7 @@ function TopQuotes() {
     const fetchTopQuotes = async () => {
         setIsLoading(true);
         try {
-            const response = await axios.get('http://localhost:3001/api/top-quotes');
+            const response = await axios.get(`${config.apiBaseUrl}/api/top-quotes`);
             setQuotes(response.data);
             setIsLoading(false);
         } catch (err) {
@@ -33,7 +35,7 @@ function TopQuotes() {
       const endpoint = isLiked ? `/api/quotes/${quoteId}/unlike` : `/api/quotes/${quoteId}/like`;
 
       try {
-          await axios.put(`http://localhost:3001${endpoint}`, { userId });
+          await axios.put(`${config.apiBaseUrl}${endpoint}`, { userId });
           const updatedQuotes = quotes.map(quote => {
               if (quote._id === quoteId) {
                   return {

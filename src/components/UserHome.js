@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
-import '../css/UserHome.css'; // Make sure your path here is correct
+import config from '../config'; // Ensure the path to config is correct
+import '../css/UserHome.css';
 
 function UserHome() {
     const [quoteText, setQuoteText] = useState('');
@@ -18,10 +19,11 @@ function UserHome() {
 
     const fetchQuotes = useCallback(async () => {
         try {
-            const response = await axios.get(`http://localhost:3001/api/quotes?userId=${userId}`);
+            const response = await axios.get(`${config.apiBaseUrl}/api/quotes?userId=${userId}`);
             setQuotes(response.data.slice(0, 5));
         } catch (error) {
             console.error("Error fetching quotes", error);
+            setError("Failed to fetch quotes.");
         }
     }, [userId]);
 
@@ -39,14 +41,12 @@ function UserHome() {
             setError("Please fill out all fields.");
             return;
         }
-        const quoteData = {
-            quoteText,
-            origin,
-            userId
-        };
-        const endpoint = editingQuoteId ? `/api/quotes/${editingQuoteId}` : '/api/quotes';
+        const quoteData = { quoteText, origin, userId };
+        const endpoint = editingQuoteId ? `${config.apiBaseUrl}/api/quotes/${editingQuoteId}` : `${config.apiBaseUrl}/api/quotes`;
+        const method = editingQuoteId ? 'put' : 'post';
+
         try {
-            const response = await axios[editingQuoteId ? 'put' : 'post'](`http://localhost:3001${endpoint}`, quoteData);
+            const response = await axios[method](endpoint, quoteData);
             if (response.data) {
                 fetchQuotes();
                 setQuoteText('');
@@ -62,12 +62,13 @@ function UserHome() {
 
     const deleteQuote = async (quoteId) => {
         try {
-            const response = await axios.delete(`http://localhost:3001/api/quotes/${quoteId}`);
+            const response = await axios.delete(`${config.apiBaseUrl}/api/quotes/${quoteId}`);
             if (response.status === 200) {
                 setQuotes(quotes.filter(quote => quote._id !== quoteId));
             }
         } catch (error) {
             console.error('Error deleting quote', error);
+            setError("Failed to delete quote.");
         }
     };
 
@@ -90,9 +91,7 @@ function UserHome() {
                             onChange={handleQuoteTextChange}
                             maxLength="100"
                         />
-                        <div className="character-counter">
-                            {charCount}/100 characters
-                        </div>
+                        <div className="character-counter">{charCount}/100 characters</div>
                     </div>
                     <div className="form-group">
                         <input
@@ -118,7 +117,7 @@ function UserHome() {
                 ))}
             </div>
         </div>
-    );    
+    );
 }
 
 export default UserHome;

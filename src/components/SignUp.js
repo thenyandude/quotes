@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import '../css/AuthForm.css';
 import { useNavigate } from 'react-router-dom';
+import config from '../config'; 
+
 
 function SignUp() {
   const [username, setUsername] = useState('');
@@ -19,7 +21,7 @@ function SignUp() {
     }
 
     try {
-      const response = await axios.post('http://localhost:3001/api/signup', { username, password });
+      const response = await axios.post(`${config.apiBaseUrl}/api/signup`, { username, password });
       if (response.status === 201) {
         navigate('/login');
       }

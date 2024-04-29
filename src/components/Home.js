@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
 import '../css/Home.css';
+import config from '../config'; 
 
 function Home() {
     const [quote, setQuote] = useState(null);
@@ -10,7 +10,7 @@ function Home() {
     useEffect(() => {
         const fetchRandomQuote = async () => {
             try {
-                const response = await axios.get('http://localhost:3001/api/quotes/random');
+                const response = await axios.get(`${config.apiBaseUrl}/api/quotes/random`);
                 setQuote(response.data);
             } catch (error) {
                 console.error("Error fetching random quote", error);
@@ -29,7 +29,7 @@ function Home() {
       const endpoint = isLiked ? `/api/quotes/${quoteId}/unlike` : `/api/quotes/${quoteId}/like`;
   
       try {
-          await axios.put(`http://localhost:3001${endpoint}`, { userId });
+          await axios.put(`${config.apiBaseUrl}${endpoint}`, { userId });
           if (quote._id === quoteId) {
               const updatedLikes = isLiked
                   ? quote.likes.filter(id => id !== userId)

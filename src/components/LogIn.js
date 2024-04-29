@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useAuth } from '../context/AuthContext'; // Import the useAuth hook
 import '../css/AuthForm.css'
 import { useNavigate } from 'react-router-dom';
+import config from '../config'; 
 
 function Login() {
   const { setIsLoggedIn, setUsername, setUserId } = useAuth(); // Update to include setUserId
@@ -14,7 +15,7 @@ function Login() {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:3001/api/login', { username: loginUsername, password });
+      const response = await axios.post(`${config.apiBaseUrl}/api/login`, { username: loginUsername, password });
       if (response.status === 200) {
       setIsLoggedIn(true);
       setUsername(loginUsername);

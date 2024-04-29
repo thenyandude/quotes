@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import '../css/Home.css';
+import config from '../config'; 
 
 function FindQuotes() {
   const [quotes, setQuotes] = useState([]);
@@ -11,7 +12,7 @@ function FindQuotes() {
   useEffect(() => {
     const fetchQuotes = async () => {
       try {
-        const response = await axios.get(`http://localhost:3001/api/quotes/byUser/${username}`);
+        const response = await axios.get(`${config.apiBaseUrl}/api/quotes/byUser/${username}`);
         setQuotes(response.data);
       } catch (error) {
         console.error("Error fetching quotes", error);
@@ -28,7 +29,7 @@ function FindQuotes() {
 
     const endpoint = isLiked ? `/api/quotes/${quoteId}/unlike` : `/api/quotes/${quoteId}/like`;
     try {
-      await axios.put(`http://localhost:3001${endpoint}`, { userId });
+      await axios.put(`${config.apiBaseUrl}${endpoint}`, { userId });
       setQuotes(quotes.map(quote => {
         if (quote._id === quoteId) {
           const updatedLikes = isLiked
