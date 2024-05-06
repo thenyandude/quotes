@@ -15,7 +15,7 @@ function Login() {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(`${config.apiBaseUrl}/api/login`, { username: loginUsername, password });
+      const response = await axios.post(`10.12.5.25:3000/api/login`, { username: loginUsername, password });
       if (response.status === 200) {
       setIsLoggedIn(true);
       setUsername(loginUsername);

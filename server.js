@@ -6,8 +6,7 @@ require('dotenv').config();  // Ensures that the .env file is loaded into proces
 
 const app = express();
 app.use(express.json());  // Parses JSON request bodies
-app.use(cors());  // Enables CORS for all domains
-
+app.use(cors());
 // Connect to MongoDB
 mongoose.connect(process.env.MONGO_URI, {
   useNewUrlParser: true,
@@ -25,7 +24,7 @@ console.log("MongoDB URI: ", process.env.MONGO_URI);
 app.use('/api', require('./src/routes/authRoutes'));
 app.use('/api', require('./src/routes/quoteRoutes'));
 
-const port = process.env.PORT || 3001; // Default to 3000 if PORT is not specified
-app.listen(port, () => {
+const port = process.env.PORT || 3000; // Default to 3000 if PORT is not specified
+app.listen(port,'0.0.0.0', () => {
   console.log(`Server running on port ${port}`);
 });

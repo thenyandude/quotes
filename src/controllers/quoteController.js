@@ -117,9 +117,9 @@ exports.getRandomQuote = async (req, res) => {
     }
     res.status(200).send(randomQuote);
   } catch (error) {
-    console.error('Error fetching random quote', error);
-    res.status(500).send({ message: 'Error fetching random quote', error });
-  }
+    console.error("Error fetching random quote", { error, action: "Fetching random quote" });
+    res.status(500).send({ message: 'Error fetching random quote', error: error.message });
+}
 };
 
 exports.getTopQuotes = async (req, res) => {
