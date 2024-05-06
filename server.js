@@ -24,7 +24,8 @@ console.log("MongoDB URI: ", process.env.MONGO_URI);
 app.use('/api', require('./src/routes/authRoutes'));
 app.use('/api', require('./src/routes/quoteRoutes'));
 
-const port = process.env.PORT || 3000; // Default to 3000 if PORT is not specified
-app.listen(port,'0.0.0.0', () => {
+const port = process.env.SERVER_PORT || 3001; // Default to 3000 if PORT is not specified
+app.listen(port, () => {
+
   console.log(`Server running on port ${port}`);
 });
